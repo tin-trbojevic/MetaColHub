@@ -58,92 +58,96 @@ class _LoginPageState extends State<LoginPage> {
           body: Center(
             child: Padding(
               padding: const EdgeInsets.all(25.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  //logo
-                  SizedBox(
-                    height: 200,
-                    child: Image.asset(
-                      Theme.of(context).brightness == Brightness.dark
-                          ? 'assets/images/logo_dark.png'
-                          : 'assets/images/logo_light.png',
-                      fit: BoxFit.fitHeight,
+              child: SingleChildScrollView(
+                physics: BouncingScrollPhysics(),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    //logo
+                    SizedBox(
+                      height: 200,
+                      child: Image.asset(
+                        Theme.of(context).brightness == Brightness.dark
+                            ? 'assets/images/logo_dark.png'
+                            : 'assets/images/logo_light.png',
+                        fit: BoxFit.fitHeight,
+                      ),
                     ),
-                  ),
 
-                  const SizedBox(height: 50),
+                    const SizedBox(height: 50),
 
-                  //email textfield
-                  MyTextfield(
-                    hintText: "Email",
-                    obscureText: false,
-                    controller: emailController,
-                  ),
+                    //email textfield
+                    MyTextfield(
+                      hintText: "Email",
+                      obscureText: false,
+                      controller: emailController,
+                    ),
 
-                  const SizedBox(height: 10),
+                    const SizedBox(height: 10),
 
-                  //password textfield
-                  MyTextfield(
-                    hintText: "Password",
-                    obscureText: true,
-                    controller: passwordController,
-                  ),
+                    //password textfield
+                    MyTextfield(
+                      hintText: "Password",
+                      obscureText: true,
+                      controller: passwordController,
+                    ),
 
-                  const SizedBox(height: 10),
+                    const SizedBox(height: 10),
 
-                  //forgot password
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) {
-                                return ForgotPasswordPage();
-                              },
+                    //forgot password
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) {
+                                  return ForgotPasswordPage();
+                                },
+                              ),
+                            );
+                          },
+                          child: Text(
+                            "Forgot Password?",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color:
+                                  Theme.of(context).colorScheme.inversePrimary,
                             ),
-                          );
-                        },
-                        child: Text(
-                          "Forgot Password?",
+                          ),
+                        ),
+                      ],
+                    ),
+
+                    const SizedBox(height: 25),
+
+                    //sign in button
+                    MyButton(text: "Login", onTap: login),
+
+                    const SizedBox(height: 25),
+
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Don't have an account?  ",
                           style: TextStyle(
-                            fontWeight: FontWeight.bold,
                             color: Theme.of(context).colorScheme.inversePrimary,
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-
-                  const SizedBox(height: 25),
-
-                  //sign in button
-                  MyButton(text: "Login", onTap: login),
-
-                  const SizedBox(height: 25),
-
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "Don't have an account?  ",
-                        style: TextStyle(
-                          color: Theme.of(context).colorScheme.inversePrimary,
+                        GestureDetector(
+                          onTap: widget.onTap,
+                          child: const Text(
+                            "Register Here",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
                         ),
-                      ),
-                      GestureDetector(
-                        onTap: widget.onTap,
-                        child: const Text(
-                          "Register Here",
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
