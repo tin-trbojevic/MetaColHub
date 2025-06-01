@@ -34,7 +34,7 @@ class FirestoreService {
         .snapshots();
   }
 
-  Future<void> pickAndUploadFiles() async {
+  Future<void> pickAndUploadFiles(BuildContext context) async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
       type: FileType.custom,
       allowedExtensions: ['csv'],
@@ -48,7 +48,7 @@ class FirestoreService {
           continue;
         }
 
-        await _processCSVFile(file);
+        await _processCSVFile(context, file);
       }
     }
   }
@@ -64,7 +64,7 @@ class FirestoreService {
     return existingFiles.docs.isNotEmpty;
   }
 
-  Future<void> _processCSVFile(PlatformFile file) async {
+  Future<void> _processCSVFile(BuildContext context, PlatformFile file) async {
     try {
       File localFile = File(file.path!);
       String csvString = await localFile.readAsString();
@@ -78,17 +78,19 @@ class FirestoreService {
         return;
       }
 
-      DocumentReference fileRef = await _firestore
+      DocumentReference fileRef = _firestore
           .collection('uploaded_files')
-          .add({
-            'fileName': file.name,
-            'uploadedAt': FieldValue.serverTimestamp(),
-            'userId': userId,
-          });
+          .doc(file.name);
+
+      await fileRef.set({
+        'fileName': file.name,
+        'uploadedAt': FieldValue.serverTimestamp(),
+        'userId': userId,
+      });
       for (int i = 0; i < csvRows.length; i++) {
         List<dynamic> row = csvRows[i];
 
-        if (row.length >= 3) {
+        if (row.length == 3) {
           String base = row[0].toString().trim();
           String collocation = row[1].toString().trim();
           List<String> exampleParts =
@@ -101,7 +103,9 @@ class FirestoreService {
             'example': example,
             'fileId': fileRef.id,
           });
-        } else {}
+        } else {
+          displayMessageToUser('Invalid row skipped: $row', context);
+        }
       }
     } catch (e) {
       //

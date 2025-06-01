@@ -19,73 +19,79 @@ class EditCollocationDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
-      title: const Text('Edit Collocation'),
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          MyTextfield(
-            hintText: "Enter Base",
-            obscureText: false,
-            controller: baseController,
-          ),
-          const SizedBox(height: 10),
-          MyTextfield(
-            hintText: "Enter Collocation",
-            obscureText: false,
-            controller: collocationController,
-          ),
-          const SizedBox(height: 10),
-          MyTextfield(
-            hintText: "Enter Example",
-            obscureText: false,
-            controller: exampleController,
-          ),
-        ],
-      ),
-      actions: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    return ConstrainedBox(
+      constraints: const BoxConstraints(maxWidth: 700),
+      child: AlertDialog(
+        title: const Text('Edit Collocation'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
           children: [
-            TextButton(
-              onPressed: onCancel,
-              style: TextButton.styleFrom(
-                backgroundColor: Theme.of(context).colorScheme.primary,
-                foregroundColor: Colors.red[400],
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 20,
-                  vertical: 12,
-                ),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-              ),
-              child: const Text(
-                "Cancel",
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
-              ),
+            MyTextfield(
+              hintText: "Enter Base",
+              obscureText: false,
+              controller: baseController,
+              maxLines: 10,
             ),
-            ElevatedButton(
-              onPressed: onSave,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Theme.of(context).colorScheme.secondary,
-                foregroundColor: Theme.of(context).colorScheme.inversePrimary,
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 25,
-                  vertical: 12,
-                ),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-              ),
-              child: const Text(
-                "Save",
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
-              ),
+            const SizedBox(height: 10),
+            MyTextfield(
+              hintText: "Enter Collocation",
+              obscureText: false,
+              controller: collocationController,
+              maxLines: 10,
+            ),
+            const SizedBox(height: 10),
+            MyTextfield(
+              hintText: "Enter Example",
+              obscureText: false,
+              controller: exampleController,
+              maxLines: 10,
             ),
           ],
         ),
-      ],
+        actions: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              TextButton(
+                onPressed: onCancel,
+                style: TextButton.styleFrom(
+                  backgroundColor: Theme.of(context).colorScheme.primary,
+                  foregroundColor: Colors.red[400],
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 12,
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+                child: const Text(
+                  "Cancel",
+                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+                ),
+              ),
+              ElevatedButton(
+                onPressed: onSave,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Theme.of(context).colorScheme.secondary,
+                  foregroundColor: Theme.of(context).colorScheme.inversePrimary,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 25,
+                    vertical: 12,
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+                child: const Text(
+                  "Save",
+                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }

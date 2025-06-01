@@ -16,6 +16,7 @@ class AddedFiles extends StatefulWidget {
 class AddedFilesState extends State<AddedFiles> {
   final FirestoreService firestoreService = FirestoreService();
   bool _isLoading = false;
+  String _loadingMessage = 'Loading, please wait...';
 
   @override
   Widget build(BuildContext context) {
@@ -100,13 +101,15 @@ class AddedFilesState extends State<AddedFiles> {
                                         );
 
                                     if (confirmDelete == true) {
-                                      setState(() => _isLoading = true);
+                                      setState(() {
+                                        _loadingMessage =
+                                            'Please wait while file is deleting...';
+                                        _isLoading = true;
+                                      });
                                       await firestoreService.deleteFile(
                                         file.id,
                                       );
-                                      setState(() {
-                                        _isLoading = false;
-                                      });
+                                      setState(() => _isLoading = false);
                                     }
                                   },
                                 ),
@@ -121,8 +124,23 @@ class AddedFilesState extends State<AddedFiles> {
               ),
               if (_isLoading)
                 Container(
-                  color: Colors.black.withOpacity(0.3),
-                  child: const Center(child: CircularProgressIndicator()),
+                  color: Theme.of(context).colorScheme.surface.withOpacity(0.8),
+                  child: Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const CircularProgressIndicator(),
+                        const SizedBox(height: 16),
+                        Text(
+                          _loadingMessage,
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
             ],
           ),
@@ -132,9 +150,12 @@ class AddedFilesState extends State<AddedFiles> {
         padding: const EdgeInsets.all(7.0),
         child: FloatingActionButton(
           onPressed: () async {
-            setState(() => _isLoading = true);
+            setState(() {
+              _loadingMessage = 'Please wait while file is being uploaded...';
+              _isLoading = true;
+            });
             try {
-              await firestoreService.pickAndUploadFiles();
+              await firestoreService.pickAndUploadFiles(context);
             } catch (e) {
               if (context.mounted) {
                 displayMessageToUser("Error: $e", context);

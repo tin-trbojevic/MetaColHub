@@ -6,20 +6,22 @@ class SearchButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.secondary,
-          borderRadius: BorderRadius.circular(12),
-        ),
-        padding: const EdgeInsets.all(12),
-        margin: const EdgeInsets.only(left: 10),
-        child: Center(
-          child: Icon(
-            Icons.search,
-            color: Theme.of(context).colorScheme.background,
+    return Container(
+      margin: const EdgeInsets.only(left: 10),
+      height: 48,
+      child: ElevatedButton(
+        onPressed: onTap,
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Theme.of(context).colorScheme.secondary,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
           ),
+          padding: const EdgeInsets.all(12),
+        ),
+
+        child: Icon(
+          Icons.search,
+          color: Theme.of(context).colorScheme.background,
         ),
       ),
     );

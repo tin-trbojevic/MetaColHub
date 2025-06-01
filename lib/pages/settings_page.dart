@@ -19,7 +19,7 @@ class SettingsPage extends StatefulWidget {
 class _SettingsPageState extends State<SettingsPage> {
   bool _isLoading = false;
 
-  Future<void> _deleteAccount(BuildContext context) async {
+  Future<void> deleteAccount(BuildContext context) async {
     final user = FirebaseAuth.instance.currentUser;
 
     if (user == null) return;
@@ -151,7 +151,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: GestureDetector(
-                        onTap: () => _deleteAccount(context),
+                        onTap: () => deleteAccount(context),
                         child: Row(
                           children: [
                             Icon(

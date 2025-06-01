@@ -56,10 +56,13 @@ class _HomePageState extends State<HomePage> {
                         hintText: "Search collocations...",
                         obscureText: false,
                         controller: searchController,
+                        maxLines: 1,
                         onChanged: (value) {
-                          setState(() {
-                            searchQuery = value.trim();
-                          });
+                          if (value.trim().isEmpty) {
+                            setState(() {
+                              searchQuery = '';
+                            });
+                          }
                         },
                       ),
                     ),
@@ -86,18 +89,33 @@ class _HomePageState extends State<HomePage> {
                     }
 
                     if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                      return Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          const SizedBox(height: 70),
-                          Lottie.asset('assets/home2.json'),
-                          const SizedBox(height: 20),
-                          const Text(
-                            'No collocations found',
-                            style: TextStyle(fontSize: 16),
-                          ),
-                        ],
-                      );
+                      if (searchQuery.isEmpty) {
+                        return Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            const SizedBox(height: 70),
+                            Lottie.asset('assets/home2.json'),
+                            const SizedBox(height: 20),
+                            const Text(
+                              'Enter a search term',
+                              style: TextStyle(fontSize: 16),
+                            ),
+                          ],
+                        );
+                      } else {
+                        return Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            const SizedBox(height: 70),
+                            Lottie.asset('assets/home2.json'),
+                            const SizedBox(height: 20),
+                            const Text(
+                              'No terms found',
+                              style: TextStyle(fontSize: 16),
+                            ),
+                          ],
+                        );
+                      }
                     }
 
                     List<Map<String, dynamic>> collocations = snapshot.data!;

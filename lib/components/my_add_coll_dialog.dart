@@ -80,18 +80,21 @@ class _AddCollocationDialogState extends State<AddCollocationDialog> {
             hintText: "Enter Base",
             obscureText: false,
             controller: baseController,
+            maxLines: 2,
           ),
           const SizedBox(height: 10),
           MyTextfield(
             hintText: "Enter Collocation",
             obscureText: false,
             controller: collocationController,
+            maxLines: 2,
           ),
           const SizedBox(height: 10),
           MyTextfield(
             hintText: "Enter Example",
             obscureText: false,
             controller: exampleController,
+            maxLines: 7,
           ),
           const SizedBox(height: 10),
           Container(
